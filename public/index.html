@@ -1,0 +1,227 @@
+<!doctype html>
+<!--
+  Material Design Lite
+  Copyright 2015 Google Inc. All rights reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      https://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License
+-->
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Travel Planner</title>
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <!--<link rel="icon" sizes="192x192" href="images/android-desktop.png">-->
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Travel Planner">
+    <link rel="apple-touch-icon-precomposed" href="images/ios-desktop.png">
+
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
+    <meta name="msapplication-TileColor" content="#3372DF">
+
+    <!--Add favicon here
+    <link rel="shortcut icon" href="images/favicon.png">-->
+
+    <!--Font stylesheets-->
+    <link href='https://fonts.googleapis.com/css?family=Anton' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.1.2/material.indigo-pink.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="stylesheets/material.min.css">
+    <link rel="stylesheet" href="stylesheets/styles.css">
+
+    <link rel="stylesheet" href="libraries/bootstrap/css/bootstrap.min.css">
+
+</head>
+
+<body>
+<div ng-app="myGradProject">
+    <div ng-controller="blog" class="addImage demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-color--orange-100">
+        <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
+            <div class="mdl-layout__header-row">
+                <span class="mdl-layout-title"><h1>Travel Planner</h1></span>
+                <div class="mdl-layout-spacer"></div>
+                <h3 class="welcome" ng-show="loginSuccess">Welcome {{user}} !</h3>
+
+                <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" ng-show="loginSuccess" id="hdrbtn"> <!--removed ng-hide="dispUsers[0].show"-->
+                    <i class="material-icons">more_vert</i>
+                </button>
+                <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn">
+                    <li class="mdl-menu__item" ng-click="logout()">Logout</li>
+                </ul>
+            </div>
+        </header>
+        <div class="demo-card-wide mdl-card mdl-shadow--2dp mdl-color--grey-100 center" ng-show="!loginSuccess">
+            <div class="mdl-layout__content centerForm">
+                <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet forms">
+                    <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+                        <div class="mdl-tabs__tab-bar">
+                            <a href="#signIn-panel" class="mdl-tabs__tab is-active">Sign In</a>
+                            <a href="#signUp-panel" class="mdl-tabs__tab">Sign Up</a>
+                        </div>
+
+                        <div class="mdl-tabs__panel is-active" id="signIn-panel">
+                            <form name="signInForm" novalidate class="center">
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-group centerForm">
+                                    <label for="username">Username</label>
+                                    <input class="centerForm" type="text" ng-keydown="loginFailed = false" id="username" name="username" ng-model="formData.username" maxlength="20" required>
+                                    <div class="error">
+                                        <span ng-show="signInForm.username.$error.required && signInForm.username.$dirty">Required</span>
+                                    </div>
+                                </div>
+
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-group centerForm">
+                                    <label for="password">Password</label>
+                                    <input class="centerForm" type="password" ng-keydown="loginFailed = false" id="password" name="password" maxlength="20" ng-model="formData.password" required />
+                                    <div class="error">
+                                        <span ng-show="signInForm.password.$error.required && signInForm.password.$dirty">Required</span>
+                                    </div>
+                                </div>
+
+                                <span class="error" ng-show="loginFailed">Please check your credentials...</span>
+                                <div class="form-group centerForm">
+                                    <button ng-click="login()" class="formBtn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit" ng-disabled="!signInForm.$valid"> <!--removed clsas="btn"-->
+                                        Login
+                                    </button>
+
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="mdl-tabs__panel" id="signUp-panel">
+                            <form name="signUpForm" novalidate class="center">
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-group centerForm">
+                                    <label for="newUsername">Username</label>
+                                    <input class="centerForm" type="text" id="newUsername" name="newUsername" ng-pattern="/^[A-z][A-z0-9]*$/" ng-keydown="registerSuccess = false; duplicateUser=false" ng-model="formData.newUsername" ng-minlength="5" ng-maxlength="20" maxlength="20" required>
+                                    <div class="error">
+                                        <span ng-show="signUpForm.newUsername.$error.required && signUpForm.newUsername.$dirty">Required</span>
+                                            <span ng-show="!signUpForm.newUsername.$error.minLength && !signUpForm.newUsername.$error.maxLength &&
+                                    signUpForm.newUsername.$error.pattern && signUpForm.newUsername.$dirty">
+                                        *Username must start with a letter, and contain letters &amp; numbers only.</span>
+                                            <span ng-show="!signUpForm.newUsername.$error.required && (signUpForm.newUsername.$error.minlength
+                                    || signUpForm.newUsername.$error.maxlength) && signUpForm.newUsername.$dirty">*Username must be between 5 to 20 characters.</span>
+                                    </div>
+                                </div>
+
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-group centerForm">
+                                    <label for="newPassword">Password</label>
+                                    <input class="centerForm" type="password" id="newPassword" name="newPassword" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/" ng-keydown="registerSuccess = false; duplicateUser=false" maxlength="20" ng-model="formData.newPassword" ng-minlength="8" ng-maxlength="20" required />
+                                    <div class="error">
+                                        <span ng-show="signUpForm.newPassword.$error.required && signUpForm.newPassword.$dirty">Required</span>
+                                            <span ng-show="!signUpForm.newPassword.$error.required && (signUpForm.newPassword.$error.minlength
+                                    || signUpForm.newPassword.$error.maxlength) && signUpForm.newPassword.$dirty">
+                                            *Password must be between 8 to 20 characters.</span>
+                                            <span ng-show="!signUpForm.newPassword.$error.required && !signUpForm.newPassword.$error.minlength && !signUpForm.newPassword.$error.maxlength && signUpForm.newPassword.$error.pattern && signUpForm.newPassword.$dirty">
+                                        *Password must contain one lower &amp; uppercase letter, and one non-alpha character (a number or a symbol.)</span>
+                                    </div>
+                                </div>
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-group centerForm">
+                                    <label for="password_c">Confirm Password</label>
+                                    <input type="password" class="centerForm" maxlength="20" id="password_c" ng-keydown="registerSuccess = false; duplicateUser=false" ng-model="formData.password_c" compare-to="formData.newPassword" required />
+                                </div>
+
+                                <span class="success" ng-show="registerSuccess">Great! New user created. Please sign in to the application.</span>
+                                <span class="error" ng-show="duplicateUser">Sorry! This username is already taken.</span>
+                                <div class="form-group centerForm">
+                                    <button ng-click="signUp()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent formBtn" type="submit" ng-disabled="!signUpForm.$valid">
+                                        Register
+                                    </button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <main class="mdl-layout__content mdl-color--grey-100" ng-show="loginSuccess">
+            <div class="mdl-grid demo-content">
+                <div class="addPadding mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell">
+                    <h2>Paris Trip</h2>
+                    <h4>June 13, 2016 - August 5, 2016</h4>
+                </div>
+                <div class="formPadding mdl-shadow--2dp mdl-color--indigo-50 mdl-cell mdl-cell--8-col">
+                    <h3 class="headings">How can you make it fun?</h3>
+                    <form action="#" name="inputPost">
+                        <div class="mdl-textfield mdl-js-textfield shareIdea">
+                            <textarea maxlength="140" class="mdl-textfield__input" ng-model="blog.post" rows="2" id="sample5" required></textarea>
+                            <label class="mdl-textfield__label" for="sample5">Share your trip idea...</label>
+                        </div>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent shareBtn" ng-click="add()" ng-disabled="inputPost.$invalid">
+                            Share
+                        </button>
+                    </form>
+                    <div class="postArea">
+                        <div class="posts mdl-cell mdl-cell--10-col" ng-repeat="item in disp | orderBy:'id':true">
+                            <div class="user-post">
+                                <h3>{{item.post}}</h3></div>
+                            Posted by <span class="author">{{item.user}}</span> on <span class="author">{{item.date}}</span>
+                            <a class="postStar" href="#" ng-model="item.star" ng-click="update(item._id); item.star=!item.star; item.star?item.hearts=item.hearts+1: item.hearts = item.hearts-1">
+                                <i ng-class="{'fa fa-heart':item.star,'fa fa-heart-o':!item.star}"></i>
+                            </a>
+                            <span>+{{item.hearts}}</span>
+                            <hr/>
+                        </div>
+                    </div>
+                </div>
+                <div class="demo-cards mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-grid mdl-grid--no-spacing">
+                    <div ng-controller="todo" class="demo-options mdl-card mdl-color--deep-purple-400 mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
+                        <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
+                            <h3>To-do List</h3>
+                            <div class="todo-wrapper">
+                                <form action="#" name="toDoInput">
+                                    <div class="todoInput mdl-textfield mdl-js-textfield">
+                                        <input class="mdl-textfield__input" type="text" maxlength="30" ng-model="text.content" id="sample3" required>
+                                    </div>
+                                    <button ng-click="addTodo()" ng-disabled="toDoInput.$invalid" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent addTodo">
+                                        Add
+                                    </button>
+                                </form>
+                                <div class="checkbox todoList" ng-repeat="item in disp">
+                                    <input type="checkbox" id="{{$index}}" ng-model="item.done" ng-click="done(item._id)">
+                                    <label for="{{$index}}" class="{{item.done}}">{{item.content}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mdl-card__actions mdl-card--border">
+                            <a href="#" ng-click="rem()" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--blue-grey-50">Clear done</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="libraries/jquery-2.2.0.js"></script>
+<script type="text/javascript" defer src="libraries/mdl/material.min.js"></script>
+<script type="text/javascript" src="libraries/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="libraries/angular.min.js"></script>
+<script type="text/javascript" src="libraries/ngStorage.min.js"></script>
+<script src="javascripts/core.js"></script>
+
+</body>
+
+</html>
