@@ -18,3 +18,4 @@ To access the application, user needs to register and create credentials. After 
 * [Material Design Lite](https://getmdl.io/)
 * [Bootstrap](http://getbootstrap.com/)
 * [Mongoose.js](http://mongoosejs.com/)
+* [ngStorage](https://github.com/gsklee/ngStorage)
