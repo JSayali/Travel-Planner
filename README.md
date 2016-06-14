@@ -1,6 +1,6 @@
-# Travel-Planner
+# Travel Planner
 
-Take a look at it - [Travel-Planner](https://travelplanner-1.herokuapp.com/)
+Take a look at it - [Travel Planner](https://travelplanner-1.herokuapp.com/)
 
 ### Description
 `Travel Planner` is a web application which provides a platform to allow group of people going on a trip to interact with each other and plan the trip activities. It is in the initial stages of development and can be said as a good example of [minimum viable product (MVP)](https://en.wikipedia.org/wiki/Minimum_viable_product) for the travel planning web sites. 
